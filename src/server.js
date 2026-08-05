@@ -23,11 +23,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api', require('./routes/index'));
 
 app.get('/api/health', (req, res) => {
   res.json({ success: true, mensaje: 'Academia Creativa API funcionando', version: '1.0.0' });
 });
+
+app.use('/api', require('./routes/index'));
 
 app.use((req, res) => {
   res.status(404).json({ success: false, mensaje: `Ruta no encontrada: ${req.originalUrl}` });
