@@ -7,8 +7,12 @@ const connectDB = require('./config/db');
 const app = express();
 
 connectDB().then(() => {
-  const { iniciarCron } = require('./services/notificacionesService')
-  iniciarCron()
+  if (process.env.NOTIFICACIONES_ACTIVAS === 'true') {
+    const { iniciarCron } = require('./services/notificacionesService')
+    iniciarCron()
+  } else {
+    console.log('[Cron] Notificaciones automáticas DESACTIVADAS (NOTIFICACIONES_ACTIVAS != true)')
+  }
 })
 
 
